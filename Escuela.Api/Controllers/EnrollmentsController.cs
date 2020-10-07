@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccess.Context;
 using Escuela.Api.Managers;
 using Escuela.Api.Models;
+using Escuela.Api.Models.InputParameters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,16 +22,17 @@ namespace Escuela.Api.Controllers
         {
             _enrollmentManager = new EnrollmentManager(context);
         }
-
+        
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Professor>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<Enrollment>>> GetProfessorsAsync(CancellationToken token)
+        public async Task<ActionResult<List<Enrollment>>> GetEnrollmentsAsync(
+            [FromQuery]EnrollmentInputParameters inputParameters, CancellationToken token)
         {
             try
             {
-                var enrollments = await _enrollmentManager.GetAllEnrollments(token);
+                var enrollments = await _enrollmentManager.GetEnrollments(inputParameters, token);
 
                 if (enrollments.Count == 0)
                 {
@@ -43,5 +45,7 @@ namespace Escuela.Api.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+
     }
 }

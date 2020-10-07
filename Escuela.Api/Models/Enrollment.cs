@@ -13,7 +13,7 @@ namespace Escuela.Api.Models
         public string ProfessionalLicense { get; set; }
         public string Class { get; set; }
         public double? Grade { get; set; }
-        public string SchoolCycle { get; set; }
+        public string Period { get; set; }
         public string Schedule { get; set; }
 
     }

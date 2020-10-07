@@ -17,6 +17,10 @@ namespace DataAccess.Model
             LazyLoad = lazyLoader;
         }
 
+        public Enrollment()
+        {
+        }
+
         public long Id { get; set; }
         public long CourseId { get; set; }
         public long StudentId { get; set; }

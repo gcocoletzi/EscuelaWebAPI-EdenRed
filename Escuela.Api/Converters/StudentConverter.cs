@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Extensions;
+using Escuela.Api.Models.Enums;
 using ApiModel = Escuela.Api.Models;
 using DataModel = DataAccess.Model;
 
@@ -24,8 +25,8 @@ namespace Escuela.Api.Converters
             apiModelStudent.Phone = dataStudent.Person.Phone;
 
             //Major
-            apiModelStudent.MajorId = (ApiModel.Major)dataStudent.MajorId;
-            apiModelStudent.MajorName = ((ApiModel.Major)dataStudent.MajorId).GetDisplayName();
+            apiModelStudent.MajorId = (Major)dataStudent.MajorId;
+            apiModelStudent.MajorName = ((Major)dataStudent.MajorId).GetDisplayName();
 
             return apiModelStudent;
         }

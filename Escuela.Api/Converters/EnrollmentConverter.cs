@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.OpenApi.Extensions;
+using Escuela.Api.Models.Enums;
 using ApiModel = Escuela.Api.Models;
 using DataModel = DataAccess.Model;
 
@@ -17,12 +18,12 @@ namespace Escuela.Api.Converters
 
             apiEnrollment.Student = string.Concat(dataEnrollment.Student.Person.FirstName,
                                                     dataEnrollment.Student.Person.LastName);
-            apiEnrollment.Major = ((ApiModel.Major)dataEnrollment.Student.MajorId).GetDisplayName();
+            apiEnrollment.Major = ((Major)dataEnrollment.Student.MajorId).GetDisplayName();
             apiEnrollment.Grade = dataEnrollment.Grade;
 
             apiEnrollment.Class = dataEnrollment.Course.Class.ClassName;
             apiEnrollment.Schedule = dataEnrollment.Course.Schedule;
-            apiEnrollment.SchoolCycle = dataEnrollment.Period;
+            apiEnrollment.Period = dataEnrollment.Period;
 
             return apiEnrollment;
         }

@@ -1,4 +1,4 @@
-﻿namespace Escuela.Api.Models
+﻿namespace Escuela.Api.Models.Enums
 {
     public enum Major
     {
