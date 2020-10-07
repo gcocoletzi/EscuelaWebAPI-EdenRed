@@ -24,7 +24,7 @@ namespace Escuela.Api.Controllers
         }
         
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Professor>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<Enrollment>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Enrollment>>> GetEnrollmentsAsync(
