@@ -9,7 +9,7 @@ using ApiModel = Escuela.Api.Models;
 
 namespace Escuela.Api.Managers
 {
-    public class StudentManager
+    public class StudentManager : IStudentManager
     {
         private SchoolDbContext _dbContext;
         public StudentManager(SchoolDbContext dbContext)

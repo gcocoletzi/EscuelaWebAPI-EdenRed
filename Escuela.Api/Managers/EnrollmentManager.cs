@@ -14,7 +14,7 @@ using DataModel = DataAccess.Model;
 
 namespace Escuela.Api.Managers
 {
-    public class EnrollmentManager
+    public class EnrollmentManager : IEnrollmentManager
     {
         private SchoolDbContext _context;
 
@@ -79,7 +79,7 @@ namespace Escuela.Api.Managers
             {
                 dataEnrollments = await _context.GetEnrollmentsByPeriod(inputParameters.Period, cancellationToken);
             }
-           
+
 
             apiEnrollments = ArrangeAsList(dataEnrollments);
             return apiEnrollments;

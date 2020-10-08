@@ -16,7 +16,7 @@ namespace Escuela.Api.Controllers
     [ApiController]
     public class EnrollmentsController : ControllerBase
     {
-        private EnrollmentManager _enrollmentManager;
+        private IEnrollmentManager _enrollmentManager;
 
         public EnrollmentsController(SchoolDbContext context)
         {

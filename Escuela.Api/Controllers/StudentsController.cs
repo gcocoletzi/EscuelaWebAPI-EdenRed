@@ -16,7 +16,7 @@ namespace Escuela.Api.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private StudentManager _studentManager;
+        private IStudentManager _studentManager;
 
         public StudentsController(SchoolDbContext context)
         {
