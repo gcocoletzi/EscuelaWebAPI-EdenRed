@@ -46,6 +46,63 @@ namespace Escuela.Api.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(IEnumerable<Enrollment>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Enrollment>> GetEnrollmentAsync(long id, CancellationToken token)
+        {
+            try
+            {
+                var enrollment = await _enrollmentManager.GetSingleEnrollment(id, token);
+
+                if (enrollment == null)
+                {
+                    return NotFound();
+                }
+                return enrollment;
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<Enrollment>> UpdateEnrollmentAsync(
+           long id,
+           [FromQuery]EnrollmentInputParameters inputParameters,
+           [FromBody] Enrollment enrollment,
+           CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await _enrollmentManager.UpdateEnrollment(enrollment, inputParameters, id, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+            [HttpPost]
+        [ProducesResponseType(typeof(IEnumerable<Enrollment>), StatusCodes.Status200OK)]
+        public async Task<ActionResult> CreateProfessorAsync([FromBody]Enrollment enrollment, CancellationToken token)
+        {
+            try
+            {
+                await _enrollmentManager.EnrollToCourse(enrollment, token);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
 
     }
 }

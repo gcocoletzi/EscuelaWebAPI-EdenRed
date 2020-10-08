@@ -19,13 +19,15 @@ namespace DataAccess.Model
 
         public Enrollment()
         {
+            //Course = new Course();
+            //Student = new Student();
         }
 
         public long Id { get; set; }
         public long CourseId { get; set; }
         public long StudentId { get; set; }
-        public Double? Grade { get; set; }
-        public string Period { get; set; }
+        public int EnrollmentStatus { get; set; }
+        public DateTime LastStatusChangeDate { get; set; }
 
         public Course Course
         {

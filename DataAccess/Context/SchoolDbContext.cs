@@ -54,7 +54,7 @@ namespace DataAccess.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        
+
         public async Task InsertNewStudent(Student student, CancellationToken token)
         {
             Students.Add(student);
@@ -66,6 +66,20 @@ namespace DataAccess.Context
             Professors.Add(professor);
             await SaveChangesAsync(token);
         }
+
+        public async Task InsertNewEnrollment(Enrollment enrollment, CancellationToken token)
+        {
+            Enrollments.Add(enrollment);
+            await SaveChangesAsync(token);
+        }
+
+        public async Task<Enrollment> UpdateEnrollmentStatus(Enrollment enrollment, CancellationToken cancellationToken)
+        {
+            await SaveChangesAsync(cancellationToken);
+
+            return await RetrieveEnrollment(this, enrollment.Id, cancellationToken);
+        }
+
         public async Task<List<Enrollment>> GetEnrollmentsByPeriod(string period, CancellationToken cancellationToken)
         {
             return await RetrieveEnrollmentByPeriod(this, period, cancellationToken);
@@ -83,7 +97,12 @@ namespace DataAccess.Context
 
         public async Task<List<Enrollment>> GetEnrollments(CancellationToken cancellationToken)
         {
-            return await RetrieveEnrollment(this, cancellationToken);
+            return await RetrieveEnrollments(this, cancellationToken);
+        }
+
+        public async Task<Enrollment> GetEnrollmentById(long enrollmentId, CancellationToken cancellationToken)
+        {
+            return await RetrieveEnrollment(this, enrollmentId, cancellationToken);
         }
 
         public async Task<List<Professor>> GetProfessors(CancellationToken cancellationToken)
@@ -110,7 +129,15 @@ namespace DataAccess.Context
                               select p).ToListAsync(cancellationToken);
             };
 
-        private static Func<SchoolDbContext, CancellationToken, Task<List<Enrollment>>> RetrieveEnrollment =
+        private static Func<SchoolDbContext, long, CancellationToken, Task<Enrollment>> RetrieveEnrollment =
+            async (SchoolDbContext context, long id, CancellationToken cancellationToken) =>
+            {
+                return await (from r in context.Enrollments
+                              where r.Id == id
+                              select r).SingleOrDefaultAsync(cancellationToken);
+            };
+
+        private static Func<SchoolDbContext, CancellationToken, Task<List<Enrollment>>> RetrieveEnrollments =
             async (SchoolDbContext context, CancellationToken cancellationToken) =>
             {
                 return await (from r in context.Enrollments
@@ -129,8 +156,10 @@ namespace DataAccess.Context
             async (SchoolDbContext context, long studentId, string period, CancellationToken cancellationToken) =>
             {
                 return await (from r in context.Enrollments
+                              join c in context.Courses
+                              on r.CourseId equals c.Id
                               where r.StudentId == studentId
-                                    && r.Period == period
+                                    && c.Period == period
                               select r).ToListAsync(cancellationToken);
             };
 
@@ -138,7 +167,9 @@ namespace DataAccess.Context
             async (SchoolDbContext context, string period, CancellationToken cancellationToken) =>
             {
                 return await (from r in context.Enrollments
-                              where r.Period == period
+                              join c in context.Courses
+                              on r.CourseId equals c.Id
+                              where c.Period == period
                               select r).ToListAsync(cancellationToken);
             };
 

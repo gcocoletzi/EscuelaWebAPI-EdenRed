@@ -34,8 +34,8 @@ namespace Escuela.Api.Managers
 
         public async Task InsertProfessor(Professor professor, CancellationToken token)
         {
-            var dataStudent = ProfessorConverter.ApiToEntityModel(professor);
-            await _dbContext.InsertNewProfessor(dataStudent, token);
+            var dataProfessor = ProfessorConverter.ApiToEntityModel(professor);
+            await _dbContext.InsertNewProfessor(dataProfessor, token);
             return;
         }
     }

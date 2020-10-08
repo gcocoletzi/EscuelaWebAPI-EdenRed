@@ -11,7 +11,9 @@ namespace DataAccess.Model
         private Class _class;
         private Professor _professor;
         private ILazyLoader _lazyLoader;
-        
+        public Course()
+        {
+        }
         public Course(ILazyLoader lazyLoader)
         {
             _lazyLoader = lazyLoader;
@@ -21,6 +23,9 @@ namespace DataAccess.Model
         public long ClassId { get; set; }
         public long ProfessorId { get; set; }
         public string Schedule { get; set; }
+        public string Period { get; set; }
+        public DateTime StartDate { get; set; }
+        public int CourseStatus { get; set; }
 
         public Class Class
         {

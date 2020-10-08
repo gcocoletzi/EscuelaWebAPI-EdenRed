@@ -16,6 +16,9 @@ namespace DataAccess.Model.Configuration
             builder.Property(e => e.Schedule).HasColumnName("schedule");
             builder.Property(e => e.ProfessorId).HasColumnName("professor_id");
             builder.Property(e => e.ClassId).HasColumnName("class_id");
+            builder.Property(e => e.Period).HasColumnName("period");
+            builder.Property(e => e.StartDate).HasColumnName("start_date");
+            builder.Property(e => e.CourseStatus).HasColumnName("course_status");
             builder.HasOne(e => e.Class).WithMany().HasForeignKey(e => e.ClassId).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(e => e.Professor).WithMany().HasForeignKey(e => e.ProfessorId).OnDelete(DeleteBehavior.Restrict);
         }
